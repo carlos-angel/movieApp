@@ -5,6 +5,12 @@ aplicación para consultar las películas, series de TV y más. Todo lo relacion
 ## getting started
 
 ```bash
+# .env.example file copy and rename in .env
+cp .env.example .env
+# define environment variables in .env file
+```
+
+```bash
 # install dependencies
 # npm
 npm install
