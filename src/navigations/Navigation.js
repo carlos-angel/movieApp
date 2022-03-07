@@ -8,12 +8,10 @@ const Drawer = createDrawerNavigator();
 export default function Navigation() {
   return (
     <NavigationContainer>
-      <Drawer.Navigator initialRouteName="app">
-        <Drawer.Screen
-          name="app"
-          component={StackNavigation}
-          options={{title: 'The movie app'}}
-        />
+      <Drawer.Navigator
+        initialRouteName="app"
+        screenOptions={{headerShown: false}}>
+        <Drawer.Screen name="app" component={StackNavigation} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
