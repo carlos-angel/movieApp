@@ -2,7 +2,7 @@ import {SafeAreaView} from 'react-native';
 import {Provider as PaperProvider, Button} from 'react-native-paper';
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createDrawerNavigator} from '@react-navigation/drawer';
 
 function HomeScreen({navigation}) {
   return (
@@ -24,17 +24,17 @@ function NotificationsScreen({navigation}) {
   );
 }
 
-const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
 
 export default function App() {
   console.log('hello debugger');
   return (
     <PaperProvider>
       <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="Notifications" component={NotificationsScreen} />
-        </Stack.Navigator>
+        <Drawer.Navigator>
+          <Drawer.Screen name="Home" component={HomeScreen} />
+          <Drawer.Screen name="Notifications" component={NotificationsScreen} />
+        </Drawer.Navigator>
       </NavigationContainer>
     </PaperProvider>
   );
