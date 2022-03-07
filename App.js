@@ -1,8 +1,10 @@
-import {SafeAreaView} from 'react-native';
+import {SafeAreaView, LogBox} from 'react-native';
 import {Provider as PaperProvider, Button} from 'react-native-paper';
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createDrawerNavigator} from '@react-navigation/drawer';
+
+LogBox.ignoreLogs(['react-native-gesture-handler']);
 
 function HomeScreen({navigation}) {
   return (
