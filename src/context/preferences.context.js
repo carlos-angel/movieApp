@@ -2,7 +2,7 @@ import {createContext} from 'react';
 
 export const PreferencesContext = createContext({
   theme: 'dark',
-  ToggleThem: () => {},
+  toggleTheme: () => {},
 });
 
 export const {Provider: ProviderPreferences} = PreferencesContext;
