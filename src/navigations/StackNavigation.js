@@ -16,6 +16,10 @@ export default function StackNavigation(props) {
     return <IconButton icon="menu" onPress={() => navigation.openDrawer()} />;
   };
 
+  const menuRight = () => (
+    <IconButton icon="magnify" onPress={() => navigation.navigate('search')} />
+  );
+
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -24,6 +28,7 @@ export default function StackNavigation(props) {
         options={{
           title: 'The movie App',
           headerLeft: () => menuLeft({isGoBack: false}),
+          headerRight: () => menuRight(),
         }}
       />
       <Stack.Screen
@@ -32,6 +37,7 @@ export default function StackNavigation(props) {
         options={{
           title: '',
           headerLeft: () => menuLeft({isGoBack: true}),
+          headerRight: () => menuRight(),
         }}
       />
       <Stack.Screen
@@ -40,6 +46,7 @@ export default function StackNavigation(props) {
         options={{
           title: 'Nuevas Películas',
           headerLeft: () => menuLeft({isGoBack: true}),
+          headerRight: () => menuRight(),
         }}
       />
       <Stack.Screen
@@ -48,6 +55,7 @@ export default function StackNavigation(props) {
         options={{
           title: 'Películas populares',
           headerLeft: () => menuLeft({isGoBack: false}),
+          headerRight: () => menuRight(),
         }}
       />
       <Stack.Screen
