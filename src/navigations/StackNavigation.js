@@ -7,36 +7,56 @@ const Stack = createNativeStackNavigator();
 
 export default function StackNavigation(props) {
   const {navigation} = props;
-  const menuLeft = () => (
-    <IconButton icon="menu" onPress={() => navigation.openDrawer()} />
-  );
+  const menuLeft = ({isGoBack}) => {
+    if (isGoBack) {
+      return (
+        <IconButton icon="arrow-left" onPress={() => navigation.goBack()} />
+      );
+    }
+    return <IconButton icon="menu" onPress={() => navigation.openDrawer()} />;
+  };
 
   return (
     <Stack.Navigator>
       <Stack.Screen
         name="home"
         component={Home}
-        options={{title: 'The movie App', headerLeft: () => menuLeft()}}
+        options={{
+          title: 'The movie App',
+          headerLeft: () => menuLeft({isGoBack: false}),
+        }}
       />
       <Stack.Screen
         name="movie"
         component={Movie}
-        options={{title: '', headerLeft: () => menuLeft()}}
+        options={{
+          title: '',
+          headerLeft: () => menuLeft({isGoBack: true}),
+        }}
       />
       <Stack.Screen
         name="news"
         component={News}
-        options={{title: 'Nuevas Películas', headerLeft: () => menuLeft()}}
+        options={{
+          title: 'Nuevas Películas',
+          headerLeft: () => menuLeft({isGoBack: true}),
+        }}
       />
       <Stack.Screen
         name="popular"
         component={Popular}
-        options={{title: 'Películas populares', headerLeft: () => menuLeft()}}
+        options={{
+          title: 'Películas populares',
+          headerLeft: () => menuLeft({isGoBack: false}),
+        }}
       />
       <Stack.Screen
         name="search"
         component={Search}
-        options={{title: '', headerLeft: () => menuLeft()}}
+        options={{
+          title: '',
+          headerLeft: () => menuLeft({isGoBack: true}),
+        }}
       />
     </Stack.Navigator>
   );
