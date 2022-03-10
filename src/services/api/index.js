@@ -1,0 +1,17 @@
+import {
+  TMDB_API_KEY,
+  TMDB_BASE_URL,
+  TMDB_VERSION,
+  TMDB_LENGUAJE,
+  TMDB_PATH_IMAGE,
+} from 'constants/api';
+
+export default {
+  movies: {
+    getNowPlaying: ({page}) =>
+      `${TMDB_BASE_URL}/${TMDB_VERSION}/movie/now_playing?api_key=${TMDB_API_KEY}&language=${TMDB_LENGUAJE}&page=${page}`,
+  },
+  image: {
+    w500: name => `${TMDB_PATH_IMAGE}/w500${name}`,
+  },
+};
