@@ -14,4 +14,5 @@ export default {
   image: {
     w500: name => `${TMDB_PATH_IMAGE}/w500${name}`,
   },
+  genres: `${TMDB_BASE_URL}/${TMDB_VERSION}/genre/movie/list?api_key=${TMDB_API_KEY}&language=${TMDB_LENGUAJE}`,
 };
