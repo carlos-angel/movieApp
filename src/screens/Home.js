@@ -1,17 +1,24 @@
-import {ScrollView, View, StyleSheet} from 'react-native';
+import {ScrollView, View, StyleSheet, Dimensions} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {Title, Text} from 'react-native-paper';
+import Carousel from 'react-native-snap-carousel';
 import map from 'lodash/map';
 import {getNewsMovies} from 'services/movies/get-news-movies';
 import CarouselVertical from 'components/CarouselVertical';
 import MovieVerticalItem from 'components/movies/MovieVerticalItem';
 import {getMoviesWithGenres} from 'utils/get-movies-with-genres';
 import {getGenres} from 'services/movies/get-genres';
+import {getGenreMovies} from 'services/movies/get-genre-movies';
+import CardMovie from 'components/movies/CardMovie';
+
+const {width} = Dimensions.get('window');
+const ITEM_WIDTH_CAROUSEL_GENRE_MOVIES = Math.round(width * 0.3);
 
 export default function Home({navigation}) {
   const [newsMovies, setNewsMovies] = useState([]);
   const [genres, setGenres] = useState([]);
   const [genreSelected, setGenreSelected] = useState(null);
+  const [moviesForGenre, setMoviesForGenre] = useState([]);
 
   const onChangeGenre = id => setGenreSelected(id);
 
@@ -27,6 +34,14 @@ export default function Home({navigation}) {
       })
       .catch(() => setGenres([]));
   }, []);
+
+  useEffect(() => {
+    if (genreSelected) {
+      getGenreMovies(genreSelected)
+        .then(({results}) => setMoviesForGenre(results))
+        .catch(() => setGenreSelected([]));
+    }
+  }, [genreSelected]);
 
   const moreNewsMovies = async page => {
     try {
@@ -73,6 +88,19 @@ export default function Home({navigation}) {
             );
           })}
         </ScrollView>
+
+        <Carousel
+          firstItem={1}
+          inactiveSlideScale={1}
+          inactiveSlideOpacity={1}
+          layout="default"
+          sliderWidth={width}
+          itemWidth={ITEM_WIDTH_CAROUSEL_GENRE_MOVIES}
+          data={moviesForGenre}
+          renderItem={({item}) => (
+            <CardMovie {...item} navigation={navigation} />
+          )}
+        />
       </View>
     </ScrollView>
   );
