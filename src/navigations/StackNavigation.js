@@ -36,6 +36,7 @@ export default function StackNavigation(props) {
         component={Movie}
         options={{
           title: '',
+          headerTransparent: true,
           headerLeft: () => menuLeft({isGoBack: true}),
           headerRight: () => menuRight(),
         }}
