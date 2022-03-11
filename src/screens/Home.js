@@ -6,7 +6,7 @@ import CarouselVertical from 'components/CarouselVertical';
 import MovieVerticalItem from 'components/movies/MovieVerticalItem';
 import {getMoviesWithGenres} from 'utils/get-movies-with-genres';
 
-export default function Home() {
+export default function Home({navigation}) {
   const [newsMovies, setNewsMovies] = useState([]);
 
   useEffect(() => {
@@ -30,7 +30,9 @@ export default function Home() {
           <Title style={styles.title}>Nuevas Películas</Title>
           <CarouselVertical
             data={newsMovies}
-            renderItem={({item}) => <MovieVerticalItem {...item} />}
+            renderItem={({item}) => (
+              <MovieVerticalItem {...item} navigation={navigation} />
+            )}
           />
         </View>
       )}

@@ -6,11 +6,13 @@ import size from 'lodash/size';
 import endpoints from 'services/api';
 
 export default function MovieVerticalItem(props) {
-  const {title, poster_path, genres} = props;
+  const {id, title, poster_path, genres, navigation} = props;
   const uri_poster = endpoints.image.w500(poster_path);
 
+  const goMovie = () => navigation.navigate('movie', {id, title});
+
   return (
-    <TouchableWithoutFeedback>
+    <TouchableWithoutFeedback onPress={goMovie}>
       <View style={styles.card}>
         <Image style={styles.image} source={{uri: uri_poster}} />
         <Title style={styles.title}>{title}</Title>
