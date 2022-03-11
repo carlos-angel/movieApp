@@ -4,7 +4,6 @@ import {Title, Text} from 'react-native-paper';
 import Carousel from 'react-native-snap-carousel';
 import map from 'lodash/map';
 import {getNewsMovies} from 'services/movies/get-news-movies';
-import CarouselVertical from 'components/CarouselVertical';
 import MovieVerticalItem from 'components/movies/MovieVerticalItem';
 import {getMoviesWithGenres} from 'utils/get-movies-with-genres';
 import {getGenres} from 'services/movies/get-genres';
@@ -13,6 +12,7 @@ import CardMovie from 'components/movies/CardMovie';
 
 const {width} = Dimensions.get('window');
 const ITEM_WIDTH_CAROUSEL_GENRE_MOVIES = Math.round(width * 0.3);
+const ITEM_WIDTH_CAROUSEL_NEWS_MOVIES = Math.round(width * 0.7);
 
 export default function Home({navigation}) {
   const [newsMovies, setNewsMovies] = useState([]);
@@ -58,7 +58,10 @@ export default function Home({navigation}) {
       {newsMovies && (
         <View style={styles.newsMovies}>
           <Title style={styles.title}>Nuevas Películas</Title>
-          <CarouselVertical
+          <Carousel
+            sliderWidth={width}
+            itemWidth={ITEM_WIDTH_CAROUSEL_NEWS_MOVIES}
+            layout="default"
             data={newsMovies}
             renderItem={({item}) => (
               <MovieVerticalItem {...item} navigation={navigation} />
