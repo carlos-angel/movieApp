@@ -29,7 +29,7 @@ export default function Movie({route, navigation}) {
     return <Loading message="cargando película" />;
   }
 
-  const {poster_path, title, genres, vote_average} = movie;
+  const {poster_path, title, genres, vote_average, vote_count} = movie;
 
   const poster_uri = endpoints.image.w500(poster_path);
   const media = vote_average / 2;
@@ -74,6 +74,8 @@ export default function Movie({route, navigation}) {
             imageSize={20}
             style={styles.rating}
           />
+
+          <Text style={styles.votes}>{`${vote_count} votos`}</Text>
         </View>
       </ScrollView>
       <ModalVideo show={showVideo} setShow={setShowVideo} idMovie={id} />
@@ -124,8 +126,12 @@ const styles = StyleSheet.create({
     marginTop: 10,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'flex-start',
   },
   rating: {
     marginRight: 15,
+  },
+  votes: {
+    fontSize: 12,
   },
 });
