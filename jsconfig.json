@@ -3,6 +3,7 @@
     "baseUrl": ".",
     "module": "commonjs",
     "paths": {
+      "assets/*": ["./src/assets/*"],
       "components/*": ["./src/components/*"],
       "context/*": ["./src/context/*"],
       "constants/*": ["./src/constants/*"],

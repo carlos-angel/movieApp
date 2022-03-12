@@ -7,10 +7,16 @@ import endpoints from 'services/api';
 import Loading from 'components/common/Loading';
 import ModalVideo from 'components/common/ModalVideo';
 import map from 'lodash/map';
+import {Rating} from 'react-native-ratings';
+import {useTheme} from 'hooks/useTheme';
+import starDark from 'assets/png/starDark.png';
+import starLight from 'assets/png/starLight.png';
 
 export default function Movie({route, navigation}) {
   const [movie, setMovie] = useState(null);
   const [showVideo, setShowVideo] = useState(false);
+  const {theme} = useTheme();
+  const isDark = theme === 'dark';
   const {id} = route.params;
 
   useEffect(() => {
@@ -23,8 +29,10 @@ export default function Movie({route, navigation}) {
     return <Loading message="cargando película" />;
   }
 
-  const {poster_path, title, genres} = movie;
+  const {poster_path, title, genres, vote_average} = movie;
+
   const poster_uri = endpoints.image.w500(poster_path);
+  const media = vote_average / 2;
 
   return (
     <>
@@ -55,6 +63,17 @@ export default function Movie({route, navigation}) {
               </Text>
             ))}
           </View>
+        </View>
+        <View style={styles.viewRating}>
+          <Rating
+            type="custom"
+            ratingImage={isDark ? starDark : starLight}
+            ratingColor="#ffc205"
+            ratingBackgroundColor={isDark ? '#192734' : '#f0f0f0'}
+            startingValue={media}
+            imageSize={20}
+            style={styles.rating}
+          />
         </View>
       </ScrollView>
       <ModalVideo show={showVideo} setShow={setShowVideo} idMovie={id} />
@@ -99,5 +118,14 @@ const styles = StyleSheet.create({
   genre: {
     marginRight: 15,
     color: '#8697a5',
+  },
+  viewRating: {
+    marginHorizontal: 30,
+    marginTop: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  rating: {
+    marginRight: 15,
   },
 });

@@ -11,6 +11,7 @@ module.exports = {
       'module-resolver',
       {
         alias: {
+          assets: './src/assets',
           components: './src/components',
           context: './src/context',
           constants: './src/constants',
