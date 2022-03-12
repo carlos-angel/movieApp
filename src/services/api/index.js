@@ -14,6 +14,8 @@ export default {
       `${TMDB_BASE_URL}/${TMDB_VERSION}/movie/${id}?api_key=${TMDB_API_KEY}&language=${TMDB_LENGUAJE}`,
     getGenreMovies: genreId =>
       `${TMDB_BASE_URL}/${TMDB_VERSION}/discover/movie/?api_key=${TMDB_API_KEY}&language=${TMDB_LENGUAJE}&with_genres=${genreId}`,
+    getVideoMovieById: id =>
+      `${TMDB_BASE_URL}/${TMDB_VERSION}/movie/${id}/videos?api_key=${TMDB_API_KEY}&language=${TMDB_LENGUAJE}`,
   },
   image: {
     w500: name => `${TMDB_PATH_IMAGE}/w500${name}`,
