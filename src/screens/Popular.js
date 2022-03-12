@@ -6,7 +6,7 @@ import {
   Image,
   TouchableWithoutFeedback,
 } from 'react-native';
-import {Text, Title} from 'react-native-paper';
+import {Text, Title, Button} from 'react-native-paper';
 import map from 'lodash/map';
 import {getPopularMovies} from 'services/movies/get-popular-movies';
 import Loading from 'components/common/Loading';
@@ -20,27 +20,32 @@ import starLight from 'assets/png/starLight.png';
 export default function Popular({navigation}) {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(10);
+
   const [loading, setLoading] = useState(false);
   const {theme} = useTheme();
   const isDark = theme === 'dark';
+  const isMorePages = page !== totalPages;
 
   useEffect(() => {
-    (async () => await moreMovies())();
+    (async () => await moreMovies(page))();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [page]);
 
-  const moreMovies = async () => {
+  const moreMovies = async currentPage => {
     setLoading(true);
-    getPopularMovies(page)
-      .then(({results}) => {
+    getPopularMovies(currentPage)
+      .then(({results, total_pages}) => {
         setMovies(currentMovies => [...currentMovies, ...results]);
-        setPage(currentPage => currentPage + 1);
+        if (total_pages !== totalPages) {
+          setTotalPages(total_pages);
+        }
       })
       .catch(() => setMovies(currentNewsMovies => currentNewsMovies))
       .finally(() => setLoading(false));
   };
 
-  if (loading) {
+  if (loading && page === 1) {
     return <Loading message="cargando películas" />;
   }
 
@@ -55,8 +60,9 @@ export default function Popular({navigation}) {
 
         return (
           <TouchableWithoutFeedback
+            key={id}
             onPress={() => navigation.navigate('movie', {id})}>
-            <View key={id} style={styles.movie}>
+            <View style={styles.movie}>
               <View style={styles.left}>
                 <Image
                   style={styles.poster}
@@ -84,6 +90,20 @@ export default function Popular({navigation}) {
           </TouchableWithoutFeedback>
         );
       })}
+      {isMorePages && (
+        <Button
+          disabled={loading}
+          loading={loading}
+          onPress={() => setPage(currentPage => currentPage + 1)}
+          mode="contained"
+          contentStyle={styles.buttonMoreMovies}
+          style={styles.loadMoreMovies}
+          labelStyle={
+            isDark ? styles.labelButtonDark : styles.labelButtonLight
+          }>
+          cargar más películas
+        </Button>
+      )}
     </ScrollView>
   );
 }
@@ -117,5 +137,18 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#8697a5',
     marginTop: 5,
+  },
+  buttonMoreMovies: {
+    paddingTop: 20,
+    paddingBottom: 20,
+  },
+  loadMoreMovies: {
+    backgroundColor: 'transparent',
+  },
+  labelButtonDark: {
+    color: '#fff',
+  },
+  labelButtonLight: {
+    color: '#000',
   },
 });
