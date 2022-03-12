@@ -29,7 +29,15 @@ export default function Movie({route, navigation}) {
     return <Loading message="cargando película" />;
   }
 
-  const {poster_path, title, genres, vote_average, vote_count} = movie;
+  const {
+    poster_path,
+    title,
+    genres,
+    vote_average,
+    vote_count,
+    overview,
+    release_date,
+  } = movie;
 
   const poster_uri = endpoints.image.w500(poster_path);
   const media = vote_average / 2;
@@ -77,6 +85,11 @@ export default function Movie({route, navigation}) {
 
           <Text style={styles.votes}>{`${vote_count} votos`}</Text>
         </View>
+        <Text style={styles.overview}>{overview}</Text>
+        <Text
+          style={
+            styles.releaseDate
+          }>{`Fecha de lanzamiento: ${release_date}`}</Text>
       </ScrollView>
       <ModalVideo show={showVideo} setShow={setShowVideo} idMovie={id} />
     </>
@@ -133,5 +146,18 @@ const styles = StyleSheet.create({
   },
   votes: {
     fontSize: 12,
+  },
+  overview: {
+    marginHorizontal: 30,
+    marginTop: 20,
+    textAlign: 'justify',
+    color: '#8697a5',
+  },
+  releaseDate: {
+    marginHorizontal: 30,
+    marginBottom: 30,
+    marginTop: 20,
+    textAlign: 'justify',
+    color: '#8697a5',
   },
 });
