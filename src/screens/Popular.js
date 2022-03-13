@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {
   View,
   StyleSheet,
@@ -14,33 +14,11 @@ import endpoints from 'services/api';
 import Rating from 'components/common/Rating';
 import defaultImage from 'assets/png/default-image.png';
 import {useTheme} from 'hooks/useTheme';
+import {useMovies} from 'hooks/useMovies';
 
 export default function Popular({navigation}) {
-  const [movies, setMovies] = useState([]);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(10);
-
-  const [loading, setLoading] = useState(false);
+  const [movies, loading, page, moreMovies] = useMovies(getPopularMovies);
   const {isDarkTheme} = useTheme();
-  const isMorePages = page !== totalPages;
-
-  useEffect(() => {
-    (async () => await moreMovies(page))();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page]);
-
-  const moreMovies = async currentPage => {
-    setLoading(true);
-    getPopularMovies(currentPage)
-      .then(({results, total_pages}) => {
-        setMovies(currentMovies => [...currentMovies, ...results]);
-        if (total_pages !== totalPages) {
-          setTotalPages(total_pages);
-        }
-      })
-      .catch(() => setMovies(currentNewsMovies => currentNewsMovies))
-      .finally(() => setLoading(false));
-  };
 
   if (loading && page === 1) {
     return <Loading message="cargando películas" />;
@@ -78,20 +56,19 @@ export default function Popular({navigation}) {
           </TouchableWithoutFeedback>
         );
       })}
-      {isMorePages && (
-        <Button
-          disabled={loading}
-          loading={loading}
-          onPress={() => setPage(currentPage => currentPage + 1)}
-          mode="contained"
-          contentStyle={styles.buttonMoreMovies}
-          style={styles.loadMoreMovies}
-          labelStyle={
-            isDarkTheme ? styles.labelButtonDark : styles.labelButtonLight
-          }>
-          cargar más películas
-        </Button>
-      )}
+
+      <Button
+        disabled={loading}
+        loading={loading}
+        onPress={moreMovies}
+        mode="contained"
+        contentStyle={styles.buttonMoreMovies}
+        style={styles.loadMoreMovies}
+        labelStyle={
+          isDarkTheme ? styles.labelButtonDark : styles.labelButtonLight
+        }>
+        cargar más películas
+      </Button>
     </ScrollView>
   );
 }

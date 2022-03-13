@@ -5,26 +5,23 @@ import Carousel from 'react-native-snap-carousel';
 import map from 'lodash/map';
 import {getNewsMovies} from 'services/movies/get-news-movies';
 import MovieVerticalItem from 'components/movies/MovieVerticalItem';
-import {getMoviesWithGenres} from 'utils/get-movies-with-genres';
 import {getGenres} from 'services/movies/get-genres';
 import {getGenreMovies} from 'services/movies/get-genre-movies';
 import CardMovie from 'components/movies/CardMovie';
+import {useMovies} from 'hooks/useMovies';
+import Loading from 'components/common/Loading';
 
 const {width} = Dimensions.get('window');
 const ITEM_WIDTH_CAROUSEL_GENRE_MOVIES = Math.round(width * 0.3);
 const ITEM_WIDTH_CAROUSEL_NEWS_MOVIES = Math.round(width * 0.7);
 
 export default function Home({navigation}) {
-  const [newsMovies, setNewsMovies] = useState([]);
+  const [newsMovies, loadingNewsMovies] = useMovies(getNewsMovies);
   const [genres, setGenres] = useState([]);
   const [genreSelected, setGenreSelected] = useState(null);
   const [moviesForGenre, setMoviesForGenre] = useState([]);
 
   const onChangeGenre = id => setGenreSelected(id);
-
-  useEffect(() => {
-    (async () => await moreNewsMovies(1))();
-  }, []);
 
   useEffect(() => {
     getGenres()
@@ -43,15 +40,9 @@ export default function Home({navigation}) {
     }
   }, [genreSelected]);
 
-  const moreNewsMovies = async page => {
-    try {
-      const {results} = await getNewsMovies(page);
-      const movies = await getMoviesWithGenres(results);
-      setNewsMovies(currentNewsMovies => [...currentNewsMovies, ...movies]);
-    } catch (error) {
-      setNewsMovies(currentNewsMovies => currentNewsMovies);
-    }
-  };
+  if (loadingNewsMovies) {
+    return <Loading message="cargando películas" />;
+  }
 
   return (
     <ScrollView showsHorizontalScrollIndicator={false}>
