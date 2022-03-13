@@ -8,7 +8,7 @@ export async function getMoviesWithGenres(movies) {
     const {genre_ids} = movie;
     const genresMovie = map(genre_ids, id => {
       const genreMovie = genres.find(genre => genre.id === id);
-      return genreMovie.name;
+      return genreMovie;
     });
     return {...movie, genres: genresMovie};
   });

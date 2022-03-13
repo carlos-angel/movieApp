@@ -6,8 +6,8 @@ import {getDetailMovie} from 'services/movies/get-detail-movie';
 import endpoints from 'services/api';
 import Loading from 'components/common/Loading';
 import ModalVideo from 'components/common/ModalVideo';
-import map from 'lodash/map';
 import Rating from 'components/common/Rating';
+import Genres from 'components/movies/Genres';
 
 export default function Movie({route, navigation}) {
   const [movie, setMovie] = useState(null);
@@ -59,13 +59,7 @@ export default function Movie({route, navigation}) {
         </View>
         <View style={styles.viewInformation}>
           <Title>{title}</Title>
-          <View style={styles.genres}>
-            {map(genres, genre => (
-              <Text key={genre.id} style={styles.genre}>
-                {genre.name}
-              </Text>
-            ))}
-          </View>
+          <Genres data={genres} size="medium" />
         </View>
         <View style={styles.viewRating}>
           <Rating startingValue={media} imageSize={20} />
@@ -112,13 +106,6 @@ const styles = StyleSheet.create({
   },
   viewInformation: {
     marginHorizontal: 30,
-  },
-  genres: {
-    flexDirection: 'row',
-  },
-  genre: {
-    marginRight: 15,
-    color: '#8697a5',
   },
   viewRating: {
     marginHorizontal: 30,

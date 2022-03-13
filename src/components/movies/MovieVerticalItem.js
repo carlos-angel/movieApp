@@ -1,8 +1,7 @@
 import {StyleSheet, View, Image, TouchableWithoutFeedback} from 'react-native';
 import React from 'react';
-import {Title, Text} from 'react-native-paper';
-import map from 'lodash/map';
-import size from 'lodash/size';
+import {Title} from 'react-native-paper';
+import Genres from 'components/movies/Genres';
 import endpoints from 'services/api';
 
 export default function MovieVerticalItem(props) {
@@ -16,13 +15,7 @@ export default function MovieVerticalItem(props) {
       <View style={styles.card}>
         <Image style={styles.image} source={{uri: uri_poster}} />
         <Title style={styles.title}>{title}</Title>
-        <View style={styles.genres}>
-          {map(genres, (genre, index) => (
-            <Text key={index} style={styles.genre}>
-              {`${genre}${index + 1 !== size(genres) ? ', ' : ''}`}
-            </Text>
-          ))}
-        </View>
+        <Genres data={genres} size="small" style={styles.genres} />
       </View>
     </TouchableWithoutFeedback>
   );
@@ -50,9 +43,5 @@ const styles = StyleSheet.create({
   genres: {
     flexDirection: 'row',
     marginHorizontal: 10,
-  },
-  genre: {
-    fontSize: 12,
-    color: '#8997a5',
   },
 });
