@@ -63,7 +63,7 @@ export default function StackNavigation(props) {
         name="search"
         component={Search}
         options={{
-          title: '',
+          title: 'Busca tus películas favoritas',
           headerLeft: () => menuLeft({isGoBack: true}),
         }}
       />
