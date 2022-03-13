@@ -18,6 +18,8 @@ export default {
       `${TMDB_BASE_URL}/${TMDB_VERSION}/movie/${id}/videos?api_key=${TMDB_API_KEY}&language=${TMDB_LENGUAJE}`,
     getPopularMovies: ({page}) =>
       `${TMDB_BASE_URL}/${TMDB_VERSION}/movie/popular?api_key=${TMDB_API_KEY}&language=${TMDB_LENGUAJE}&page=${page}`,
+    getSearchMovies: ({query}) =>
+      `${TMDB_BASE_URL}/${TMDB_VERSION}/search/movie?api_key=${TMDB_API_KEY}&language=${TMDB_LENGUAJE}&query=${query}`,
   },
   image: {
     w500: name => `${TMDB_PATH_IMAGE}/w500${name}`,
