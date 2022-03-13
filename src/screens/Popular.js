@@ -11,11 +11,9 @@ import map from 'lodash/map';
 import {getPopularMovies} from 'services/movies/get-popular-movies';
 import Loading from 'components/common/Loading';
 import endpoints from 'services/api';
+import Rating from 'components/common/Rating';
 import defaultImage from 'assets/png/default-image.png';
-import {Rating} from 'react-native-ratings';
 import {useTheme} from 'hooks/useTheme';
-import starDark from 'assets/png/starDark.png';
-import starLight from 'assets/png/starLight.png';
 
 export default function Popular({navigation}) {
   const [movies, setMovies] = useState([]);
@@ -73,16 +71,7 @@ export default function Popular({navigation}) {
                 <Title style={styles.title}>{title}</Title>
                 <Text>{release_date}</Text>
                 <View style={styles.viewRating}>
-                  <Rating
-                    type="custom"
-                    ratingImage={isDark ? starDark : starLight}
-                    ratingColor="#ffc205"
-                    ratingBackgroundColor={isDark ? '#192734' : '#f0f0f0'}
-                    startingValue={media}
-                    imageSize={20}
-                    style={styles.rating}
-                  />
-
+                  <Rating startingValue={media} imageSize={20} />
                   <Text style={styles.votes}>{`${vote_count} votos`}</Text>
                 </View>
               </View>
@@ -129,9 +118,6 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
     marginTop: 10,
-  },
-  rating: {
-    marginRight: 15,
   },
   votes: {
     fontSize: 12,

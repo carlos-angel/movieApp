@@ -7,16 +7,11 @@ import endpoints from 'services/api';
 import Loading from 'components/common/Loading';
 import ModalVideo from 'components/common/ModalVideo';
 import map from 'lodash/map';
-import {Rating} from 'react-native-ratings';
-import {useTheme} from 'hooks/useTheme';
-import starDark from 'assets/png/starDark.png';
-import starLight from 'assets/png/starLight.png';
+import Rating from 'components/common/Rating';
 
 export default function Movie({route, navigation}) {
   const [movie, setMovie] = useState(null);
   const [showVideo, setShowVideo] = useState(false);
-  const {theme} = useTheme();
-  const isDark = theme === 'dark';
   const {id} = route.params;
 
   useEffect(() => {
@@ -73,16 +68,7 @@ export default function Movie({route, navigation}) {
           </View>
         </View>
         <View style={styles.viewRating}>
-          <Rating
-            type="custom"
-            ratingImage={isDark ? starDark : starLight}
-            ratingColor="#ffc205"
-            ratingBackgroundColor={isDark ? '#192734' : '#f0f0f0'}
-            startingValue={media}
-            imageSize={20}
-            style={styles.rating}
-          />
-
+          <Rating startingValue={media} imageSize={20} />
           <Text style={styles.votes}>{`${vote_count} votos`}</Text>
         </View>
         <Text style={styles.overview}>{overview}</Text>
@@ -140,9 +126,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
-  },
-  rating: {
-    marginRight: 15,
   },
   votes: {
     fontSize: 12,
