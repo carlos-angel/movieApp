@@ -21,8 +21,7 @@ export default function Popular({navigation}) {
   const [totalPages, setTotalPages] = useState(10);
 
   const [loading, setLoading] = useState(false);
-  const {theme} = useTheme();
-  const isDark = theme === 'dark';
+  const {isDarkTheme} = useTheme();
   const isMorePages = page !== totalPages;
 
   useEffect(() => {
@@ -88,7 +87,7 @@ export default function Popular({navigation}) {
           contentStyle={styles.buttonMoreMovies}
           style={styles.loadMoreMovies}
           labelStyle={
-            isDark ? styles.labelButtonDark : styles.labelButtonLight
+            isDarkTheme ? styles.labelButtonDark : styles.labelButtonLight
           }>
           cargar más películas
         </Button>

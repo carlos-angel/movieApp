@@ -6,8 +6,7 @@ import {useTheme} from 'hooks/useTheme';
 
 export default function DrawerContent({navigation}) {
   const [activeScreen, setActiveScreen] = useState('home');
-  const {theme, toggleTheme} = useTheme();
-  const isDarkTheme = theme === 'dark';
+  const {isDarkTheme, toggleTheme} = useTheme();
 
   const navigateScreen = screen => {
     setActiveScreen(screen);

@@ -22,11 +22,15 @@ export default function App() {
   DarkThemePaper.colors = darkThemePaper(DarkThemePaper.colors);
   DarkThemeNavigation.colors = darkThemeNavigation(DarkThemeNavigation.colors);
 
+  const isDarkTheme = theme === 'dark';
+
   const toggleTheme = () =>
     setTheme(currentTheme => (currentTheme === 'dark' ? 'light' : 'dark'));
 
-  const preferences = useMemo(() => ({toggleTheme, theme}), [theme]);
-  const isDarkTheme = theme === 'dark';
+  const preferences = useMemo(
+    () => ({toggleTheme, theme, isDarkTheme}),
+    [theme, isDarkTheme],
+  );
 
   return (
     <ProviderPreferences value={preferences}>
