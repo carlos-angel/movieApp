@@ -1,13 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {StyleSheet, View, Image, ScrollView} from 'react-native';
+import {StyleSheet, ScrollView} from 'react-native';
 import React, {useState, useEffect} from 'react';
-import {Text, Title, IconButton} from 'react-native-paper';
+import {Text, Title} from 'react-native-paper';
 import {getDetailMovie} from 'services/movies/get-detail-movie';
 import endpoints from 'services/api';
 import Loading from 'components/common/Loading';
 import ModalVideo from 'components/common/ModalVideo';
 import Rating from 'components/common/Rating';
 import Genres from 'components/movies/Genres';
+import Details from 'components/movies/Details';
 
 export default function Movie({route, navigation}) {
   const [movie, setMovie] = useState(null);
@@ -40,36 +41,25 @@ export default function Movie({route, navigation}) {
   return (
     <>
       <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.viewPoster}>
-          <Image
-            style={styles.poster}
-            source={{uri: poster_uri}}
-            resizeMethod="scale"
-            resizeMode="stretch"
+        <Details>
+          <Details.Poster uri={poster_uri} />
+          <Details.Play onPress={() => setShowVideo(true)} />
+
+          <Details.Head>
+            <Title>{title}</Title>
+            <Genres data={genres} size="medium" />
+          </Details.Head>
+
+          <Details.MoreInfo>
+            <Rating startingValue={media} imageSize={20} />
+            <Text style={styles.votes}>{`${vote_count} votos`}</Text>
+          </Details.MoreInfo>
+
+          <Details.Overview text={overview} />
+          <Details.ReleaseDate
+            releaseDate={`Fecha de lanzamiento: ${release_date}`}
           />
-        </View>
-        <View style={styles.viewPlay}>
-          <IconButton
-            icon="play"
-            color="#000"
-            size={30}
-            style={styles.play}
-            onPress={() => setShowVideo(true)}
-          />
-        </View>
-        <View style={styles.viewInformation}>
-          <Title>{title}</Title>
-          <Genres data={genres} size="medium" />
-        </View>
-        <View style={styles.viewRating}>
-          <Rating startingValue={media} imageSize={20} />
-          <Text style={styles.votes}>{`${vote_count} votos`}</Text>
-        </View>
-        <Text style={styles.overview}>{overview}</Text>
-        <Text
-          style={
-            styles.releaseDate
-          }>{`Fecha de lanzamiento: ${release_date}`}</Text>
+        </Details>
       </ScrollView>
       <ModalVideo show={showVideo} setShow={setShowVideo} idMovie={id} />
     </>
@@ -77,57 +67,7 @@ export default function Movie({route, navigation}) {
 }
 
 const styles = StyleSheet.create({
-  viewPoster: {
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 10,
-    },
-    shadowOpacity: 1,
-    textShadowRadius: 10,
-  },
-  poster: {
-    width: '100%',
-    height: 545,
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
-  },
-  viewPlay: {
-    justifyContent: 'flex-end',
-    alignItems: 'flex-end',
-  },
-  play: {
-    backgroundColor: '#fff',
-    marginTop: -40,
-    marginRight: 30,
-    height: 60,
-    width: 60,
-    borderRadius: 100,
-  },
-  viewInformation: {
-    marginHorizontal: 30,
-  },
-  viewRating: {
-    marginHorizontal: 30,
-    marginTop: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-  },
   votes: {
     fontSize: 12,
-  },
-  overview: {
-    marginHorizontal: 30,
-    marginTop: 20,
-    textAlign: 'justify',
-    color: '#8697a5',
-  },
-  releaseDate: {
-    marginHorizontal: 30,
-    marginBottom: 30,
-    marginTop: 20,
-    textAlign: 'justify',
-    color: '#8697a5',
   },
 });
