@@ -1,22 +1,15 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  Image,
-  ScrollView,
-  Dimensions,
-} from 'react-native';
+import {View, StyleSheet, ScrollView, Dimensions} from 'react-native';
 import {getNewsMovies} from 'services/movies/get-news-movies';
 import {Button} from 'react-native-paper';
 import {useMovies} from 'hooks/useMovies';
 import {useTheme} from 'hooks/useTheme';
 import map from 'lodash/map';
-import endpoints from 'services/api';
 import Loading from 'components/common/Loading';
-import defaultImage from 'assets/png/default-image.png';
+import Poster from 'components/movies/Poster';
 
 const {width} = Dimensions.get('window');
+const widthPoster = width / 2;
 
 export default function News({navigation}) {
   const [movies, loading, page, moreMovies] = useMovies(getNewsMovies);
@@ -29,8 +22,16 @@ export default function News({navigation}) {
   return (
     <ScrollView>
       <View style={styles.container}>
-        {map(movies, movie => (
-          <Movie key={movie.id} {...movie} navigation={navigation} />
+        {map(movies, ({id, title, poster_path}) => (
+          <Poster
+            key={id}
+            navigation={navigation}
+            posterPath={poster_path}
+            title={title}
+            id={id}
+            height={300}
+            width={widthPoster}
+          />
         ))}
       </View>
       <Button
@@ -49,37 +50,11 @@ export default function News({navigation}) {
   );
 }
 
-function Movie(props) {
-  const {id, poster_path, navigation} = props;
-  const poster_uri = endpoints.image.w500(poster_path);
-  return (
-    <TouchableWithoutFeedback
-      onPress={() => navigation.navigate('movie', {id})}>
-      <View style={styles.movie}>
-        <Image
-          style={styles.poster}
-          source={poster_path ? {uri: poster_uri} : defaultImage}
-        />
-      </View>
-    </TouchableWithoutFeedback>
-  );
-}
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
-  },
-  movie: {
-    width: width / 2,
-    height: 300,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  poster: {
-    width: '100%',
-    height: '100%',
   },
   buttonMoreMovies: {
     paddingTop: 20,

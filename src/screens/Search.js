@@ -1,22 +1,15 @@
 import React, {useState, useEffect} from 'react';
-import {
-  StyleSheet,
-  View,
-  SafeAreaView,
-  Image,
-  TouchableWithoutFeedback,
-  Dimensions,
-} from 'react-native';
-import {Searchbar, Text} from 'react-native-paper';
+import {StyleSheet, View, SafeAreaView, Dimensions} from 'react-native';
+import {Searchbar} from 'react-native-paper';
 import {getSearchMovies} from 'services/movies/get-search-movies';
 import size from 'lodash/size';
 import {ScrollView} from 'react-native-gesture-handler';
 import map from 'lodash/map';
-import endpoints from 'services/api';
 import Loading from 'components/common/Loading';
-import defaultImage from 'assets/png/default-image.png';
+import Poster from 'components/movies/Poster';
 
 const {width} = Dimensions.get('window');
+const widthPoster = width / 2;
 
 export default function Search({navigation}) {
   const [movies, setMovies] = useState(null);
@@ -48,25 +41,17 @@ export default function Search({navigation}) {
         <View style={styles.container}>
           {loading && <Loading message="buscando..." />}
           {showResults &&
-            map(movies, movie => {
-              const {id, poster_path, title} = movie;
-              const poster_uri = endpoints.image.w500(poster_path);
-              return (
-                <TouchableWithoutFeedback
-                  onPress={() => navigation.navigate('movie', {id})}>
-                  <View style={styles.movie}>
-                    {poster_path ? (
-                      <Image
-                        style={styles.image}
-                        source={poster_path ? {uri: poster_uri} : defaultImage}
-                      />
-                    ) : (
-                      <Text>{title}</Text>
-                    )}
-                  </View>
-                </TouchableWithoutFeedback>
-              );
-            })}
+            map(movies, ({id, title, poster_path}) => (
+              <Poster
+                key={id}
+                navigation={navigation}
+                posterPath={poster_path}
+                title={title}
+                id={id}
+                height={300}
+                width={widthPoster}
+              />
+            ))}
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -83,15 +68,5 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
-  },
-  movie: {
-    width: width / 2,
-    height: 300,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  image: {
-    width: '100%',
-    height: '100%',
   },
 });
