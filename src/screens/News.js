@@ -1,19 +1,17 @@
 import React from 'react';
 import {View, StyleSheet, ScrollView, Dimensions} from 'react-native';
 import {getNewsMovies} from 'services/movies/get-news-movies';
-import {Button} from 'react-native-paper';
 import {useMovies} from 'hooks/useMovies';
-import {useTheme} from 'hooks/useTheme';
 import map from 'lodash/map';
 import Loading from 'components/common/Loading';
 import Poster from 'components/movies/Poster';
+import ButtonLoadMore from 'components/common/ButtonLoadMore';
 
 const {width} = Dimensions.get('window');
 const widthPoster = width / 2;
 
 export default function News({navigation}) {
   const [movies, loading, page, moreMovies] = useMovies(getNewsMovies);
-  const {isDarkTheme} = useTheme();
 
   if (loading && page === 1) {
     return <Loading message="cargando películas" />;
@@ -34,18 +32,9 @@ export default function News({navigation}) {
           />
         ))}
       </View>
-      <Button
-        disabled={loading}
-        loading={loading}
-        onPress={moreMovies}
-        mode="contained"
-        contentStyle={styles.buttonMoreMovies}
-        style={styles.loadMoreMovies}
-        labelStyle={
-          isDarkTheme ? styles.labelButtonDark : styles.labelButtonLight
-        }>
+      <ButtonLoadMore disabled={loading} loading={loading} onPress={moreMovies}>
         cargar más películas
-      </Button>
+      </ButtonLoadMore>
     </ScrollView>
   );
 }
@@ -55,18 +44,5 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     flexWrap: 'wrap',
-  },
-  buttonMoreMovies: {
-    paddingTop: 20,
-    paddingBottom: 20,
-  },
-  loadMoreMovies: {
-    backgroundColor: 'transparent',
-  },
-  labelButtonDark: {
-    color: '#fff',
-  },
-  labelButtonLight: {
-    color: '#000',
   },
 });

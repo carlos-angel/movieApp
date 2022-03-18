@@ -6,19 +6,18 @@ import {
   Image,
   TouchableWithoutFeedback,
 } from 'react-native';
-import {Text, Title, Button} from 'react-native-paper';
+import {Text, Title} from 'react-native-paper';
 import map from 'lodash/map';
 import {getPopularMovies} from 'services/movies/get-popular-movies';
 import Loading from 'components/common/Loading';
 import endpoints from 'services/api';
 import Rating from 'components/common/Rating';
 import defaultImage from 'assets/png/default-image.png';
-import {useTheme} from 'hooks/useTheme';
 import {useMovies} from 'hooks/useMovies';
+import ButtonLoadMore from 'components/common/ButtonLoadMore';
 
 export default function Popular({navigation}) {
   const [movies, loading, page, moreMovies] = useMovies(getPopularMovies);
-  const {isDarkTheme} = useTheme();
 
   if (loading && page === 1) {
     return <Loading message="cargando películas" />;
@@ -57,18 +56,9 @@ export default function Popular({navigation}) {
         );
       })}
 
-      <Button
-        disabled={loading}
-        loading={loading}
-        onPress={moreMovies}
-        mode="contained"
-        contentStyle={styles.buttonMoreMovies}
-        style={styles.loadMoreMovies}
-        labelStyle={
-          isDarkTheme ? styles.labelButtonDark : styles.labelButtonLight
-        }>
+      <ButtonLoadMore disabled={loading} loading={loading} onPress={moreMovies}>
         cargar más películas
-      </Button>
+      </ButtonLoadMore>
     </ScrollView>
   );
 }
@@ -99,18 +89,5 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: '#8697a5',
     marginTop: 5,
-  },
-  buttonMoreMovies: {
-    paddingTop: 20,
-    paddingBottom: 20,
-  },
-  loadMoreMovies: {
-    backgroundColor: 'transparent',
-  },
-  labelButtonDark: {
-    color: '#fff',
-  },
-  labelButtonLight: {
-    color: '#000',
   },
 });
