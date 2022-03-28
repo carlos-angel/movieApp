@@ -26,7 +26,4 @@ npx react-native start
 
 # run app android
 npx react-native run-android
-
-# run app IOS
-npx react-native run-ios
 ```
