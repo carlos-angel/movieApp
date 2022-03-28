@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, ScrollView, Dimensions} from 'react-native';
-import {getNewsMovies} from 'services/movies/get-news-movies';
+import {getNewsMovies} from 'services/movies';
 import {useMovies} from 'hooks/useMovies';
 import map from 'lodash/map';
 import Loading from 'components/common/Loading';

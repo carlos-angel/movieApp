@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, View, SafeAreaView, Dimensions} from 'react-native';
 import {Searchbar} from 'react-native-paper';
-import {getSearchMovies} from 'services/movies/get-search-movies';
+import {getSearchMovies} from 'services/movies';
 import size from 'lodash/size';
 import {ScrollView} from 'react-native-gesture-handler';
 import map from 'lodash/map';
@@ -21,8 +21,8 @@ export default function Search({navigation}) {
   useEffect(() => {
     if (size(query) > 2) {
       setLoading(true);
-      getSearchMovies(query)
-        .then(({results}) => setMovies(results))
+      getSearchMovies({query})
+        .then(({data}) => setMovies(data.results))
         .catch(() => setMovies(null))
         .finally(() => setLoading(false));
     }

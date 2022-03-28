@@ -11,8 +11,9 @@ export const useMovies = service => {
 
   useEffect(() => {
     setLoading(true);
-    service(page)
-      .then(({results, total_pages}) => {
+    service({page})
+      .then(({data}) => {
+        const {results, total_pages} = data;
         total_pages !== totalPages && setTotalPages(total_pages);
         return getMoviesWithGenres(results);
       })

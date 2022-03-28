@@ -1,9 +1,13 @@
+import axios from 'axios';
 import endpoints from 'services/api';
+import {getMessageError} from 'utils/getMessageError.util';
 
-export async function getDetailMovie(id) {
-  const endpoint = endpoints.movies.getDetailMovieById(id);
-  return fetch(endpoint)
-    .then(response => response.json())
-    .then(data => data)
-    .catch(() => console.log('ops, algo salio mal. inténtelo más tarde'));
+export async function getDetailMovie({id}) {
+  try {
+    const {data} = await axios.get(endpoints.movies.getDetailMovieById(id));
+    return {error: false, message: '', data};
+  } catch (error) {
+    const message = getMessageError(error);
+    return {error: true, message, data: null};
+  }
 }

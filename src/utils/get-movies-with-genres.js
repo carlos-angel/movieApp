@@ -1,8 +1,8 @@
 import {map} from 'lodash';
-import {getGenres} from 'services/movies/get-genres';
+import {getGenres} from 'services/movies';
 
 export async function getMoviesWithGenres(movies) {
-  const genres = await getGenres();
+  const {data: genres} = await getGenres();
 
   return map(movies, movie => {
     const {genre_ids} = movie;

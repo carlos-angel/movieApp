@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import {Text, Title} from 'react-native-paper';
 import map from 'lodash/map';
-import {getPopularMovies} from 'services/movies/get-popular-movies';
+import {getPopularMovies} from 'services/movies';
 import Loading from 'components/common/Loading';
 import endpoints from 'services/api';
 import Rating from 'components/common/Rating';

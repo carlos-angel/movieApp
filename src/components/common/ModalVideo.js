@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';
 import {StyleSheet} from 'react-native';
 import {Modal, IconButton} from 'react-native-paper';
 import {WebView} from 'react-native-webview';
-import {getVideoMovieById} from 'services/movies/get-video-movie-by-id';
+import {getVideoMovieById} from 'services/movies';
 import Loading from 'components/common/Loading';
 import {YOUTUBE_API_KEY} from 'constants/youtube';
 
@@ -12,9 +12,9 @@ export default function ModalVideo({show, setShow, idMovie}) {
   const PLATFORM = 'YouTube';
 
   useEffect(() => {
-    getVideoMovieById(idMovie)
-      .then(({results}) => {
-        const videoYouTube = results.find(
+    getVideoMovieById({id: idMovie})
+      .then(({data}) => {
+        const videoYouTube = data.results.find(
           trailerMovie => trailerMovie.site === PLATFORM,
         );
         setVideo(videoYouTube.key);

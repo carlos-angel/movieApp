@@ -1,10 +1,13 @@
+import axios from 'axios';
 import endpoints from 'services/api';
+import {getMessageError} from 'utils/getMessageError.util';
 
-export function getGenres() {
-  const endpoint = endpoints.genres;
-
-  return fetch(endpoint)
-    .then(response => response.json())
-    .then(data => data.genres)
-    .catch(() => console.log('ops, algo salio mal. inténtelo más tarde'));
+export async function getGenres() {
+  try {
+    const {data} = await axios.get(endpoints.genres);
+    return {error: false, message: '', data: data.genres};
+  } catch (error) {
+    const message = getMessageError(error);
+    return {error: true, message, data: null};
+  }
 }

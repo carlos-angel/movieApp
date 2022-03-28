@@ -1,10 +1,13 @@
+import axios from 'axios';
 import endpoints from 'services/api';
+import {getMessageError} from 'utils/getMessageError.util';
 
-export function getVideoMovieById(id) {
-  const endpoint = endpoints.movies.getVideoMovieById(id);
-
-  return fetch(endpoint)
-    .then(response => response.json())
-    .then(data => data)
-    .catch(() => console.log('ops, algo salio mal. intentelo más tarde'));
+export async function getVideoMovieById({id}) {
+  try {
+    const {data} = await axios.get(endpoints.movies.getVideoMovieById(id));
+    return {error: false, message: '', data};
+  } catch (error) {
+    const message = getMessageError(error);
+    return {error: true, message, data: null};
+  }
 }

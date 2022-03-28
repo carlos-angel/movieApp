@@ -2,7 +2,7 @@
 import {StyleSheet, ScrollView} from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {Text, Title} from 'react-native-paper';
-import {getDetailMovie} from 'services/movies/get-detail-movie';
+import {getDetailMovie} from 'services/movies';
 import endpoints from 'services/api';
 import Loading from 'components/common/Loading';
 import ModalVideo from 'components/common/ModalVideo';
@@ -16,8 +16,8 @@ export default function Movie({route, navigation}) {
   const {id} = route.params;
 
   useEffect(() => {
-    getDetailMovie(id)
-      .then(data => setMovie(data))
+    getDetailMovie({id})
+      .then(({data}) => setMovie(data))
       .catch(() => navigation.goBack());
   }, [id]);
 

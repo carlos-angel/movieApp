@@ -3,10 +3,8 @@ import React, {useEffect, useState} from 'react';
 import {Title, Text} from 'react-native-paper';
 import Carousel from 'react-native-snap-carousel';
 import map from 'lodash/map';
-import {getNewsMovies} from 'services/movies/get-news-movies';
+import {getNewsMovies, getGenres, getGenreMovies} from 'services/movies';
 import MovieVerticalItem from 'components/movies/MovieVerticalItem';
-import {getGenres} from 'services/movies/get-genres';
-import {getGenreMovies} from 'services/movies/get-genre-movies';
 import CardMovie from 'components/movies/CardMovie';
 import {useMovies} from 'hooks/useMovies';
 import Loading from 'components/common/Loading';
@@ -25,8 +23,8 @@ export default function Home({navigation}) {
 
   useEffect(() => {
     getGenres()
-      .then(data => {
-        setGenres(data);
+      .then(({data}) => {
+        setGenres({data});
         onChangeGenre(data[0].id);
       })
       .catch(() => setGenres([]));
@@ -34,8 +32,8 @@ export default function Home({navigation}) {
 
   useEffect(() => {
     if (genreSelected) {
-      getGenreMovies(genreSelected)
-        .then(({results}) => setMoviesForGenre(results))
+      getGenreMovies({genreId: genreSelected})
+        .then(({data}) => setMoviesForGenre(data.results))
         .catch(() => setGenreSelected([]));
     }
   }, [genreSelected]);
