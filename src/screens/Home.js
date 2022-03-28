@@ -24,7 +24,7 @@ export default function Home({navigation}) {
   useEffect(() => {
     getGenres()
       .then(({data}) => {
-        setGenres({data});
+        setGenres(data);
         onChangeGenre(data[0].id);
       })
       .catch(() => setGenres([]));
