@@ -1,4 +1,4 @@
-package com.movieapp;
+package com.carlosalbertoangelangel.themovies;
 
 import com.facebook.react.ReactActivity;
 import android.os.Bundle;
