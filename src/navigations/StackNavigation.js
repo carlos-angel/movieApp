@@ -26,7 +26,7 @@ export default function StackNavigation(props) {
         name="home"
         component={Home}
         options={{
-          title: 'The movie App',
+          title: 'The Movies',
           headerLeft: () => menuLeft({isGoBack: false}),
           headerRight: () => menuRight(),
         }}
