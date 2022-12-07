@@ -27,3 +27,11 @@ npx react-native start
 # run app android
 npx react-native run-android
 ```
+
+# requirements for generate .apk or .aab
+
+```bash
+# replace password Gradle variables in android/grandle.properties file
+#MYAPP_UPLOAD_STORE_PASSWORD=***** # password my-upload-key.keystore
+#MYAPP_UPLOAD_KEY_PASSWORD=***** # password my-upload-key.keystore
+```
