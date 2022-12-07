@@ -30,12 +30,12 @@ npx react-native run-android
 
 # requirements for generate .apk or .aab
 
+```bash
 1. copy password my-upload-key.keystore file
 
-```bash
-# replace password Gradle variables in android/grandle.properties file
-#MYAPP_UPLOAD_STORE_PASSWORD=***** # password my-upload-key.keystore
-#MYAPP_UPLOAD_KEY_PASSWORD=***** # password my-upload-key.keystore
+# saving Gradle variables in android/grandle.properties file
+MYAPP_UPLOAD_STORE_PASSWORD=*****
+MYAPP_UPLOAD_KEY_PASSWORD=*****
 ```
 
 2. fix View ViewPropsTypes
